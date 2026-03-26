@@ -86,20 +86,20 @@ export default function Home() {
 
   if (loading) {
     return (
-      <main className="min-h-screen flex items-center justify-center bg-neutral-950 text-white">
+      <main className="h-[100dvh] flex items-center justify-center bg-neutral-950 text-white">
         <div className="animate-pulse">Loading...</div>
       </main>
     )
   }
 
   return (
-    <main className="min-h-screen flex flex-col bg-neutral-950 text-white">
-      {/* Minimal Header */}
-      <header className="shrink-0 p-4 flex justify-between items-center">
+    <main className="h-[100dvh] flex flex-col bg-neutral-950 text-white overflow-hidden">
+      {/* Header */}
+      <header className="shrink-0 px-4 py-2 flex justify-between items-center border-b border-gray-800/50">
         <div>
-          <h1 className="text-xl font-bold tracking-tight">SwipePost</h1>
+          <h1 className="text-lg font-bold tracking-tight">SwipePost</h1>
           {remaining > 0 && (
-            <p className="text-xs text-gray-500">{remaining} in queue</p>
+            <p className="text-[10px] text-gray-500">{remaining} in queue</p>
           )}
         </div>
         {currentAccount && (
@@ -111,8 +111,8 @@ export default function Home() {
         )}
       </header>
 
-      {/* Card area */}
-      <div className="flex-1 flex items-start justify-center px-4 pt-2 pb-4 overflow-y-auto">
+      {/* Card area - takes available space */}
+      <div className="flex-1 flex items-center justify-center p-3 min-h-0">
         {currentCard ? (
           <SwipeCard
             content={{
@@ -133,33 +133,33 @@ export default function Home() {
             isTop={true}
           />
         ) : (
-          <div className="text-center text-gray-500 mt-20">
-            <p className="text-5xl mb-4">✨</p>
-            <p className="text-lg">All caught up!</p>
-            <p className="text-sm mt-2 text-gray-600">No content to review</p>
+          <div className="text-center text-gray-500">
+            <p className="text-4xl mb-3">✨</p>
+            <p className="text-base">All caught up!</p>
+            <p className="text-xs mt-1 text-gray-600">No content to review</p>
           </div>
         )}
       </div>
 
-      {/* Action buttons - sticky bottom */}
-      <footer className="shrink-0 p-4 pb-8 flex justify-center gap-8 bg-gradient-to-t from-neutral-950 via-neutral-950">
+      {/* Action buttons - always visible */}
+      <footer className="shrink-0 py-3 pb-6 flex justify-center gap-6 border-t border-gray-800/50">
         <button 
           onClick={() => handleSwipe('left')}
-          className="w-16 h-16 rounded-full bg-red-500/10 border-2 border-red-500/30 flex items-center justify-center text-red-400 text-2xl active:scale-90 transition-all hover:bg-red-500/20 disabled:opacity-30 disabled:scale-100"
+          className="w-14 h-14 rounded-full bg-red-500/10 border-2 border-red-500/40 flex items-center justify-center text-red-400 text-xl active:scale-90 transition-all"
           disabled={!currentCard}
         >
           ✕
         </button>
         <button
           onClick={() => handleSwipe('up')}
-          className="w-14 h-14 rounded-full bg-blue-500/10 border-2 border-blue-500/30 flex items-center justify-center text-blue-400 text-xl active:scale-90 transition-all hover:bg-blue-500/20 disabled:opacity-30 disabled:scale-100"
+          className="w-12 h-12 rounded-full bg-blue-500/10 border-2 border-blue-500/40 flex items-center justify-center text-blue-400 text-lg active:scale-90 transition-all"
           disabled={!currentCard}
         >
           ★
         </button>
         <button
           onClick={() => handleSwipe('right')}
-          className="w-16 h-16 rounded-full bg-green-500/10 border-2 border-green-500/30 flex items-center justify-center text-green-400 text-2xl active:scale-90 transition-all hover:bg-green-500/20 disabled:opacity-30 disabled:scale-100"
+          className="w-14 h-14 rounded-full bg-green-500/10 border-2 border-green-500/40 flex items-center justify-center text-green-400 text-xl active:scale-90 transition-all"
           disabled={!currentCard}
         >
           ✓

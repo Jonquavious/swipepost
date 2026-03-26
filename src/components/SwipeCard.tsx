@@ -14,7 +14,6 @@ interface CardContent {
   address?: string
   price_range?: string
   description?: string
-  account_name?: string
   account_handle?: string
 }
 
@@ -55,37 +54,35 @@ export default function SwipeCard({ content, onSwipe, isTop }: SwipeCardProps) {
     }
   }
 
-  const accountHandle = content.account_handle || 'newyorkinpixels'
+  const handle = content.account_handle || 'account'
 
   return (
     <motion.div
-      className="w-full max-w-sm rounded-3xl overflow-hidden bg-black shadow-2xl border border-gray-800"
+      className="w-full max-w-[320px] h-full max-h-full flex flex-col rounded-2xl overflow-hidden bg-neutral-900 shadow-2xl border border-gray-800"
       style={{ x, y, rotate }}
       animate={controls}
       drag={isTop}
       dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
       dragElastic={0.7}
       onDragEnd={handleDragEnd}
-      whileTap={{ scale: 1.01 }}
     >
-      {/* Instagram-style Header */}
-      <div className="flex items-center gap-3 p-3 border-b border-gray-800">
-        <div className="w-9 h-9 rounded-full bg-gradient-to-br from-purple-500 via-pink-500 to-orange-400 p-[2px]">
-          <div className="w-full h-full rounded-full bg-black flex items-center justify-center text-xs font-bold">
-            {accountHandle[0].toUpperCase()}
+      {/* IG Header - compact */}
+      <div className="shrink-0 flex items-center gap-2 px-3 py-2 border-b border-gray-800">
+        <div className="w-7 h-7 rounded-full bg-gradient-to-br from-purple-500 via-pink-500 to-orange-400 p-[2px]">
+          <div className="w-full h-full rounded-full bg-neutral-900 flex items-center justify-center text-[10px] font-bold">
+            {handle[0].toUpperCase()}
           </div>
         </div>
-        <div className="flex-1">
-          <p className="font-semibold text-sm">{accountHandle}</p>
+        <div className="flex-1 min-w-0">
+          <p className="font-semibold text-xs truncate">{handle}</p>
           {content.location && (
-            <p className="text-xs text-gray-400">{content.location}</p>
+            <p className="text-[10px] text-gray-500 truncate">{content.location}</p>
           )}
         </div>
-        <div className="text-gray-500">•••</div>
       </div>
 
-      {/* Image */}
-      <div className="relative aspect-square bg-gray-900">
+      {/* Image - flexible, square-ish */}
+      <div className="flex-1 relative bg-black min-h-0">
         {content.type === 'video' ? (
           <video
             ref={videoRef}
@@ -106,35 +103,29 @@ export default function SwipeCard({ content, onSwipe, isTop }: SwipeCardProps) {
           />
         )}
 
-        {/* Swipe indicators overlay */}
+        {/* Swipe overlays */}
         <motion.div 
-          className="absolute inset-0 flex items-center justify-center bg-green-500/20"
+          className="absolute inset-0 flex items-center justify-center bg-green-500/30 backdrop-blur-sm"
           style={{ opacity: approveOpacity }}
         >
-          <div className="px-6 py-3 bg-green-500 rounded-2xl font-bold text-2xl shadow-lg">
-            ✓ POST IT
-          </div>
+          <div className="px-5 py-2 bg-green-500 rounded-xl font-bold text-xl">✓ POST</div>
         </motion.div>
         <motion.div 
-          className="absolute inset-0 flex items-center justify-center bg-red-500/20"
+          className="absolute inset-0 flex items-center justify-center bg-red-500/30 backdrop-blur-sm"
           style={{ opacity: rejectOpacity }}
         >
-          <div className="px-6 py-3 bg-red-500 rounded-2xl font-bold text-2xl shadow-lg">
-            ✕ SKIP
-          </div>
+          <div className="px-5 py-2 bg-red-500 rounded-xl font-bold text-xl">✕ SKIP</div>
         </motion.div>
         <motion.div 
-          className="absolute inset-0 flex items-center justify-center bg-blue-500/20"
+          className="absolute inset-0 flex items-center justify-center bg-blue-500/30 backdrop-blur-sm"
           style={{ opacity: saveOpacity }}
         >
-          <div className="px-6 py-3 bg-blue-500 rounded-2xl font-bold text-2xl shadow-lg">
-            ★ SAVE
-          </div>
+          <div className="px-5 py-2 bg-blue-500 rounded-xl font-bold text-xl">★ SAVE</div>
         </motion.div>
 
         {content.type === 'video' && (
           <button 
-            className="absolute bottom-4 right-4 w-10 h-10 rounded-full bg-black/70 flex items-center justify-center backdrop-blur-sm"
+            className="absolute bottom-2 right-2 w-8 h-8 rounded-full bg-black/60 flex items-center justify-center text-sm"
             onClick={(e) => { e.stopPropagation(); setMuted(!muted) }}
           >
             {muted ? '🔇' : '🔊'}
@@ -142,55 +133,33 @@ export default function SwipeCard({ content, onSwipe, isTop }: SwipeCardProps) {
         )}
       </div>
 
-      {/* Instagram-style Actions */}
-      <div className="flex items-center gap-4 p-3">
-        <span className="text-2xl">♡</span>
-        <span className="text-2xl">💬</span>
-        <span className="text-2xl">➤</span>
-        <span className="ml-auto text-2xl">⊡</span>
-      </div>
-
-      {/* Caption Preview */}
-      <div className="px-3 pb-4 space-y-2">
-        {/* Restaurant name as bold opener */}
+      {/* Caption area - compact */}
+      <div className="shrink-0 px-3 py-2 space-y-1 border-t border-gray-800 max-h-[120px] overflow-y-auto">
+        {/* Restaurant + price */}
         {content.restaurant_name && (
-          <p className="text-sm">
-            <span className="font-bold">{accountHandle}</span>
-            {' '}
-            <span className="font-semibold">{content.restaurant_name}</span>
+          <div className="flex items-center justify-between">
+            <span className="font-bold text-sm">{content.restaurant_name}</span>
             {content.price_range && (
-              <span className="text-green-400"> {content.price_range}</span>
+              <span className="text-green-400 text-xs font-medium">{content.price_range}</span>
             )}
-          </p>
+          </div>
         )}
         
-        {/* Main caption */}
-        <p className="text-sm">
-          <span className="font-bold">{accountHandle}</span>
-          {' '}
-          {content.caption}
+        {/* Caption */}
+        <p className="text-xs">
+          <span className="font-semibold">{handle}</span>{' '}
+          <span className="text-gray-300">{content.caption}</span>
         </p>
-
-        {/* Description preview */}
-        {content.description && (
-          <p className="text-sm text-gray-300 line-clamp-2">
-            {content.description}
-          </p>
-        )}
 
         {/* Address */}
         {content.address && (
-          <p className="text-xs text-gray-400">
-            📍 {content.address}
-          </p>
+          <p className="text-[10px] text-gray-500">📍 {content.address}</p>
         )}
 
-        {/* Source badge */}
-        <div className="flex items-center gap-2 pt-1">
-          <span className="px-2 py-0.5 bg-gray-800 rounded text-[10px] text-gray-400 uppercase tracking-wide">
-            {content.source}
-          </span>
-        </div>
+        {/* Description if exists */}
+        {content.description && (
+          <p className="text-[10px] text-gray-400 line-clamp-2">{content.description}</p>
+        )}
       </div>
     </motion.div>
   )
