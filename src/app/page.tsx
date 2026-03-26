@@ -81,16 +81,17 @@ export default function Home() {
 
   if (loading) {
     return (
-      <main className="min-h-screen flex items-center justify-center bg-black text-white">
+      <main className="h-screen flex items-center justify-center bg-black text-white">
         <p>Loading...</p>
       </main>
     )
   }
 
   return (
-    <main className="min-h-screen flex flex-col bg-black text-white">
-      <header className="p-4 flex justify-between items-center border-b border-gray-800">
-        <h1 className="text-xl font-bold">SwipePost</h1>
+    <main className="h-screen flex flex-col bg-black text-white overflow-hidden">
+      {/* Header - fixed height */}
+      <header className="shrink-0 p-3 flex justify-between items-center border-b border-gray-800">
+        <h1 className="text-lg font-bold">SwipePost</h1>
         {currentAccount && (
           <AccountSelector 
             accounts={accounts}
@@ -100,7 +101,8 @@ export default function Home() {
         )}
       </header>
 
-      <div className="flex-1 flex items-center justify-center p-4">
+      {/* Card area - flexible, takes remaining space */}
+      <div className="flex-1 flex items-center justify-center p-4 min-h-0 relative">
         {currentCard ? (
           <SwipeCard
             content={{
@@ -124,24 +126,25 @@ export default function Home() {
         )}
       </div>
 
-      <footer className="p-6 flex justify-center gap-8">
+      {/* Footer - fixed height */}
+      <footer className="shrink-0 p-4 pb-8 flex justify-center gap-6 bg-black">
         <button 
           onClick={() => handleSwipe('left')}
-          className="w-16 h-16 rounded-full bg-red-500/20 flex items-center justify-center text-red-500 text-2xl"
+          className="w-14 h-14 rounded-full bg-red-500/20 flex items-center justify-center text-red-500 text-xl active:scale-95 transition-transform"
           disabled={!currentCard}
         >
           ✕
         </button>
         <button
           onClick={() => handleSwipe('up')}
-          className="w-14 h-14 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-500 text-xl"
+          className="w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-500 text-lg active:scale-95 transition-transform"
           disabled={!currentCard}
         >
           ★
         </button>
         <button
           onClick={() => handleSwipe('right')}
-          className="w-16 h-16 rounded-full bg-green-500/20 flex items-center justify-center text-green-500 text-2xl"
+          className="w-14 h-14 rounded-full bg-green-500/20 flex items-center justify-center text-green-500 text-xl active:scale-95 transition-transform"
           disabled={!currentCard}
         >
           ✓

@@ -45,7 +45,7 @@ export default function SwipeCard({ content, onSwipe, isTop }: SwipeCardProps) {
 
   return (
     <motion.div
-      className="absolute w-full max-w-sm aspect-[9/16] rounded-2xl overflow-hidden bg-gray-900 shadow-2xl"
+      className="w-full max-w-xs h-full max-h-[60vh] rounded-2xl overflow-hidden bg-gray-900 shadow-2xl"
       style={{ x, y, rotate, opacity }}
       drag={isTop}
       dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
@@ -76,33 +76,31 @@ export default function SwipeCard({ content, onSwipe, isTop }: SwipeCardProps) {
       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
 
       <motion.div 
-        className="absolute top-8 right-8 px-4 py-2 bg-green-500 rounded-lg font-bold text-xl"
+        className="absolute top-4 right-4 px-3 py-1 bg-green-500 rounded-lg font-bold text-sm"
         style={{ opacity: approveOpacity }}
       >
         APPROVE
       </motion.div>
       <motion.div 
-        className="absolute top-8 left-8 px-4 py-2 bg-red-500 rounded-lg font-bold text-xl"
+        className="absolute top-4 left-4 px-3 py-1 bg-red-500 rounded-lg font-bold text-sm"
         style={{ opacity: rejectOpacity }}
       >
         SKIP
       </motion.div>
       <motion.div 
-        className="absolute top-8 left-1/2 -translate-x-1/2 px-4 py-2 bg-blue-500 rounded-lg font-bold text-xl"
+        className="absolute top-4 left-1/2 -translate-x-1/2 px-3 py-1 bg-blue-500 rounded-lg font-bold text-sm"
         style={{ opacity: saveOpacity }}
       >
         SAVE
       </motion.div>
 
-      <div className="absolute bottom-0 left-0 right-0 p-4">
-        <p className="text-lg font-semibold mb-1">{content.caption}</p>
-        <div className="flex items-center gap-2 text-sm text-gray-300">
+      <div className="absolute bottom-0 left-0 right-0 p-3">
+        <p className="text-base font-semibold mb-1">{content.caption}</p>
+        <div className="flex items-center gap-2 text-xs text-gray-300">
           {content.location && (
-            <span className="flex items-center gap-1">
-              📍 {content.location}
-            </span>
+            <span>📍 {content.location}</span>
           )}
-          <span className="px-2 py-0.5 bg-white/10 rounded-full text-xs">
+          <span className="px-2 py-0.5 bg-white/10 rounded-full">
             {content.source}
           </span>
         </div>
@@ -110,7 +108,7 @@ export default function SwipeCard({ content, onSwipe, isTop }: SwipeCardProps) {
 
       {content.type === 'video' && (
         <button 
-          className="absolute top-4 right-4 w-10 h-10 rounded-full bg-black/50 flex items-center justify-center"
+          className="absolute top-4 right-4 w-8 h-8 rounded-full bg-black/50 flex items-center justify-center text-sm"
           onClick={() => setMuted(!muted)}
         >
           {muted ? '🔇' : '🔊'}
