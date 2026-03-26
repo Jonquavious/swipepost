@@ -86,20 +86,20 @@ export default function Home() {
 
   if (loading) {
     return (
-      <main className="h-screen flex items-center justify-center bg-black text-white">
-        <p>Loading...</p>
+      <main className="min-h-screen flex items-center justify-center bg-neutral-950 text-white">
+        <div className="animate-pulse">Loading...</div>
       </main>
     )
   }
 
   return (
-    <main className="h-screen flex flex-col bg-black text-white overflow-hidden">
-      {/* Header */}
-      <header className="shrink-0 p-3 flex justify-between items-center border-b border-gray-800">
+    <main className="min-h-screen flex flex-col bg-neutral-950 text-white">
+      {/* Minimal Header */}
+      <header className="shrink-0 p-4 flex justify-between items-center">
         <div>
-          <h1 className="text-lg font-bold">SwipePost</h1>
+          <h1 className="text-xl font-bold tracking-tight">SwipePost</h1>
           {remaining > 0 && (
-            <p className="text-xs text-gray-500">{remaining} to review</p>
+            <p className="text-xs text-gray-500">{remaining} in queue</p>
           )}
         </div>
         {currentAccount && (
@@ -112,7 +112,7 @@ export default function Home() {
       </header>
 
       {/* Card area */}
-      <div className="flex-1 flex items-center justify-center p-4 min-h-0 relative">
+      <div className="flex-1 flex items-start justify-center px-4 pt-2 pb-4 overflow-y-auto">
         {currentCard ? (
           <SwipeCard
             content={{
@@ -126,39 +126,40 @@ export default function Home() {
               restaurant_name: currentCard.restaurant_name,
               address: currentCard.address,
               price_range: currentCard.price_range,
-              description: currentCard.description
+              description: currentCard.description,
+              account_handle: currentAccount?.handle
             }}
             onSwipe={handleSwipe}
             isTop={true}
           />
         ) : (
-          <div className="text-center text-gray-500">
-            <p className="text-4xl mb-4">✨</p>
-            <p>All caught up!</p>
-            <p className="text-sm mt-2">No content to review</p>
+          <div className="text-center text-gray-500 mt-20">
+            <p className="text-5xl mb-4">✨</p>
+            <p className="text-lg">All caught up!</p>
+            <p className="text-sm mt-2 text-gray-600">No content to review</p>
           </div>
         )}
       </div>
 
-      {/* Footer */}
-      <footer className="shrink-0 p-4 pb-8 flex justify-center gap-6 bg-black">
+      {/* Action buttons - sticky bottom */}
+      <footer className="shrink-0 p-4 pb-8 flex justify-center gap-8 bg-gradient-to-t from-neutral-950 via-neutral-950">
         <button 
           onClick={() => handleSwipe('left')}
-          className="w-14 h-14 rounded-full bg-red-500/20 flex items-center justify-center text-red-500 text-xl active:scale-95 transition-transform disabled:opacity-30"
+          className="w-16 h-16 rounded-full bg-red-500/10 border-2 border-red-500/30 flex items-center justify-center text-red-400 text-2xl active:scale-90 transition-all hover:bg-red-500/20 disabled:opacity-30 disabled:scale-100"
           disabled={!currentCard}
         >
           ✕
         </button>
         <button
           onClick={() => handleSwipe('up')}
-          className="w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-500 text-lg active:scale-95 transition-transform disabled:opacity-30"
+          className="w-14 h-14 rounded-full bg-blue-500/10 border-2 border-blue-500/30 flex items-center justify-center text-blue-400 text-xl active:scale-90 transition-all hover:bg-blue-500/20 disabled:opacity-30 disabled:scale-100"
           disabled={!currentCard}
         >
           ★
         </button>
         <button
           onClick={() => handleSwipe('right')}
-          className="w-14 h-14 rounded-full bg-green-500/20 flex items-center justify-center text-green-500 text-xl active:scale-95 transition-transform disabled:opacity-30"
+          className="w-16 h-16 rounded-full bg-green-500/10 border-2 border-green-500/30 flex items-center justify-center text-green-400 text-2xl active:scale-90 transition-all hover:bg-green-500/20 disabled:opacity-30 disabled:scale-100"
           disabled={!currentCard}
         >
           ✓
