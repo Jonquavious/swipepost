@@ -21,6 +21,10 @@ interface Content {
   location?: string
   source: string
   status: string
+  restaurant_name?: string
+  address?: string
+  price_range?: string
+  description?: string
 }
 
 export default function Home() {
@@ -78,6 +82,7 @@ export default function Home() {
   }
 
   const currentCard = cards[currentIndex]
+  const remaining = cards.length - currentIndex
 
   if (loading) {
     return (
@@ -89,9 +94,14 @@ export default function Home() {
 
   return (
     <main className="h-screen flex flex-col bg-black text-white overflow-hidden">
-      {/* Header - fixed height */}
+      {/* Header */}
       <header className="shrink-0 p-3 flex justify-between items-center border-b border-gray-800">
-        <h1 className="text-lg font-bold">SwipePost</h1>
+        <div>
+          <h1 className="text-lg font-bold">SwipePost</h1>
+          {remaining > 0 && (
+            <p className="text-xs text-gray-500">{remaining} to review</p>
+          )}
+        </div>
         {currentAccount && (
           <AccountSelector 
             accounts={accounts}
@@ -101,7 +111,7 @@ export default function Home() {
         )}
       </header>
 
-      {/* Card area - flexible, takes remaining space */}
+      {/* Card area */}
       <div className="flex-1 flex items-center justify-center p-4 min-h-0 relative">
         {currentCard ? (
           <SwipeCard
@@ -112,7 +122,11 @@ export default function Home() {
               thumbnail: currentCard.thumbnail_url,
               caption: currentCard.caption || '',
               location: currentCard.location,
-              source: currentCard.source
+              source: currentCard.source,
+              restaurant_name: currentCard.restaurant_name,
+              address: currentCard.address,
+              price_range: currentCard.price_range,
+              description: currentCard.description
             }}
             onSwipe={handleSwipe}
             isTop={true}
@@ -126,25 +140,25 @@ export default function Home() {
         )}
       </div>
 
-      {/* Footer - fixed height */}
+      {/* Footer */}
       <footer className="shrink-0 p-4 pb-8 flex justify-center gap-6 bg-black">
         <button 
           onClick={() => handleSwipe('left')}
-          className="w-14 h-14 rounded-full bg-red-500/20 flex items-center justify-center text-red-500 text-xl active:scale-95 transition-transform"
+          className="w-14 h-14 rounded-full bg-red-500/20 flex items-center justify-center text-red-500 text-xl active:scale-95 transition-transform disabled:opacity-30"
           disabled={!currentCard}
         >
           ✕
         </button>
         <button
           onClick={() => handleSwipe('up')}
-          className="w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-500 text-lg active:scale-95 transition-transform"
+          className="w-12 h-12 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-500 text-lg active:scale-95 transition-transform disabled:opacity-30"
           disabled={!currentCard}
         >
           ★
         </button>
         <button
           onClick={() => handleSwipe('right')}
-          className="w-14 h-14 rounded-full bg-green-500/20 flex items-center justify-center text-green-500 text-xl active:scale-95 transition-transform"
+          className="w-14 h-14 rounded-full bg-green-500/20 flex items-center justify-center text-green-500 text-xl active:scale-95 transition-transform disabled:opacity-30"
           disabled={!currentCard}
         >
           ✓
